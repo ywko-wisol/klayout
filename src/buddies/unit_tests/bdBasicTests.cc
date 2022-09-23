@@ -45,6 +45,7 @@ TEST(1)
                    "--no-context-info",
                    //  CIF
                    "--blank-separator",
+                   "--suppress-layer", // ywko
                    "--dummy-calls",
                    //  DXF
                    "-op=2",
@@ -74,6 +75,9 @@ TEST(1)
   EXPECT_EQ (stream_opt.dont_write_empty_cells (), false);
   EXPECT_EQ (stream_opt.keep_instances (), false);
   EXPECT_EQ (stream_opt.write_context_info (), true);
+  // ywko
+  EXPECT_EQ (stream_opt.get_option_by_name ("cif_suppress_layer").to_bool (), false);
+  // ywko 
   EXPECT_EQ (stream_opt.get_option_by_name ("cif_blank_separator").to_bool (), false);
   EXPECT_EQ (stream_opt.get_option_by_name ("cif_dummy_calls").to_bool (), false);
   EXPECT_EQ (stream_opt.get_option_by_name ("dxf_polygon_mode").to_int (), 0);
@@ -99,6 +103,9 @@ TEST(1)
   EXPECT_EQ (stream_opt.dont_write_empty_cells (), true);
   EXPECT_EQ (stream_opt.keep_instances (), true);
   EXPECT_EQ (stream_opt.write_context_info (), false);
+  // ywko
+  EXPECT_EQ (stream_opt.get_option_by_name ("cif_suppress_layer").to_bool (), true);
+  // ywko
   EXPECT_EQ (stream_opt.get_option_by_name ("cif_blank_separator").to_bool (), true);
   EXPECT_EQ (stream_opt.get_option_by_name ("cif_dummy_calls").to_bool (), true);
   EXPECT_EQ (stream_opt.get_option_by_name ("dxf_polygon_mode").to_int (), 2);

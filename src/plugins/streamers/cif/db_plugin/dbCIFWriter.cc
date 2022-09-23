@@ -253,8 +253,10 @@ CIFWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLa
   char timestr[100];
   strftime(timestr, sizeof (timestr), "%F %T", &tt);
 
-  //  Write header
-  *this << "(CIF file written " << (const char *)timestr << " by KLayout);" << m_endl;
+  // ywko
+  // //  Write header
+  // *this << "(CIF file written " << (const char *)timestr << " by KLayout);" << m_endl;
+  // ywko
 
   //  TODO: this can be done more intelligently ..
   int tl_scale_divider;
@@ -293,8 +295,18 @@ CIFWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLa
 
     double sf = 1.0;
 
-    *this << "DS " << cell_index << " " << tl_scale_denom << " " << tl_scale_divider << ";" << m_endl;
-    *this << "9 " << m_cell_names.valid_name_for_id (*cell, CellNameValidator ()) << ";" << m_endl;
+    // ywko
+    if(m_options.suppress_layer)
+      if(tl_scale_denom == tl_scale_divider) { // 1/1 의 경우는 생략
+        *this << "DS " << m_cell_names.valid_name_for_id (*cell, CellNameValidator ()) << ";" << m_endl;
+      } else {
+        *this << "DS " << m_cell_names.valid_name_for_id (*cell, CellNameValidator ()) << " " << tl_scale_denom << " " << tl_scale_divider << ";" << m_endl;
+      }
+    else
+      *this << "DS " << cell_index << " " << tl_scale_denom << " " << tl_scale_divider << ";" << m_endl;
+    // *this << "DS " << cell_index << " " << tl_scale_denom << " " << tl_scale_divider << ";" << m_endl;
+    // *this << "9 " << m_cell_names.valid_name_for_id (*cell, CellNameValidator ()) << ";" << m_endl;
+    // ywko
 
     //  instances
     for (db::Cell::const_iterator inst = cref.begin (); ! inst.at_end (); ++inst) {
@@ -393,7 +405,11 @@ CIFWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLa
   }
 
   //  end of file
-  *this << "E" << m_endl;
+  // ywko
+  if(!m_options.suppress_layer)
+    *this << "E" << m_endl;
+  // *this << "E" << m_endl;
+  // ywko
 
   m_progress.set (mp_stream->pos ());
 
@@ -402,6 +418,11 @@ CIFWriter::write (db::Layout &layout, tl::OutputStream &stream, const db::SaveLa
 void 
 CIFWriter::emit_layer()
 {
+  // ywko
+  if(m_options.suppress_layer)
+    return;
+  // ywko
+  
   if (m_needs_emit) {
     m_needs_emit = false;
     *this << "L " << m_layer_names.valid_name_for_id (m_layer, LayerNameValidator ()) << ";" << m_endl;

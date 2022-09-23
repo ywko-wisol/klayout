@@ -61,6 +61,9 @@ GenericWriterOptions::GenericWriterOptions ()
 
   m_cif_dummy_calls = save_options.get_option_by_name ("cif_dummy_calls").to_bool ();
   m_cif_blank_separator = save_options.get_option_by_name ("cif_blank_separator").to_bool ();
+  // ywko
+  m_cif_suppress_layer = save_options.get_option_by_name ("cif_suppress_layer").to_bool ();
+  // ywko
 
   //  The default options do not specify a lambda, but we prefer having a default here:
   //  m_magic_lambda = save_options.get_option_by_name ("mag_lambda").to_double ();
@@ -285,6 +288,10 @@ GenericWriterOptions::add_options (tl::CommandLineOptions &cmd, const std::strin
                     "If this option is given, blank characters will be used to separate x and y values. "
                     "Otherwise comma characters will be used.\n"
                     "Use this option if your CIF consumer cannot read comma characters as x/y separators."
+                   )
+        << tl::arg (group + /* ywko */
+                    "#--suppress-layer",     &m_cif_suppress_layer,   "Omit L command",
+                    "If this option is given, written CIF file will not inlcude L (layer) command. "
                    )
       ;
 

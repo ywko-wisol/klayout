@@ -127,7 +127,7 @@ public:
    *  @brief The constructor
    */
   CIFWriterOptions ()
-    : dummy_calls (false), blank_separator (false)
+    : dummy_calls (false), blank_separator (false), suppress_layer (false) // ywko
   {
     //  .. nothing yet ..
   }
@@ -145,6 +145,10 @@ public:
    *  Otherwise comma characters will be used.
    */
   bool blank_separator;
+
+  // ywko
+  bool suppress_layer;
+  // ywko
 
   /**
    *  @brief Implementation of FormatSpecificWriterOptions

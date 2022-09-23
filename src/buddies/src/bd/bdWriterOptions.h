@@ -134,6 +134,9 @@ private:
 
   bool m_cif_dummy_calls;
   bool m_cif_blank_separator;
+  // ywko
+  bool m_cif_suppress_layer;
+  // ywko
 
   double m_magic_lambda;
   std::string m_magic_tech;

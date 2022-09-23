@@ -214,6 +214,18 @@ static bool get_cif_blank_separator (const db::SaveLayoutOptions *options)
   return options->get_options<db::CIFWriterOptions> ().blank_separator;
 }
 
+// ywko
+static void set_cif_suppress_layer (db::SaveLayoutOptions *options, bool f)
+{
+  options->get_options<db::CIFWriterOptions> ().suppress_layer = f;
+}
+
+static bool get_cif_suppress_layer (const db::SaveLayoutOptions *options)
+{
+  return options->get_options<db::CIFWriterOptions> ().suppress_layer;
+}
+// ywko
+
 //  extend lay::SaveLayoutOptions with the CIF options
 static
 gsi::ClassExt<db::SaveLayoutOptions> cif_writer_options (
@@ -241,6 +253,12 @@ gsi::ClassExt<db::SaveLayoutOptions> cif_writer_options (
     "See \\cif_blank_separator= method for a description of that property."
     "\nThis property has been added in version 0.23.10.\n"
     "\nThe predicate version (cif_blank_separator?) has been added in version 0.25.1.\n"
+  ) +
+  gsi::method_ext ("cif_suppress_layer=", &set_cif_suppress_layer,
+    "@brief ywko\n"
+  ) +
+  gsi::method_ext ("cif_suppress_layer?|#cif_suppress_layer", &get_cif_suppress_layer,
+    "@brief ywko\n"
   ),
   ""
 );

@@ -180,7 +180,8 @@ public:
   {
     return new db::WriterOptionsXMLElement<db::CIFWriterOptions> ("cif",
       tl::make_member (&db::CIFWriterOptions::dummy_calls, "dummy-calls") +
-      tl::make_member (&db::CIFWriterOptions::blank_separator, "blank-separator")
+      tl::make_member (&db::CIFWriterOptions::blank_separator, "blank-separator") +
+      tl::make_member (&db::CIFWriterOptions::suppress_layer, "suppress-layer") // ywko
     );
   }
 };

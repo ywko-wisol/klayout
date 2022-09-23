@@ -46,7 +46,8 @@ public:
     : wire_mode (0),
       dbu (0.001),
       create_other_layers (true),
-      keep_layer_names (false)
+      keep_layer_names (false),
+      catch_all_shapes (false) // ywko
   {
     //  .. nothing yet ..
   }
@@ -95,6 +96,10 @@ public:
    *  layer names. If this value is set to true, no name translation happens.
    */
   bool keep_layer_names;
+
+  // ywko
+  bool catch_all_shapes;
+  // ywko
 
   /**
    *  @brief Implementation of FormatSpecificReaderOptions

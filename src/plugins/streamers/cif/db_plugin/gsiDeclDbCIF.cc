@@ -53,6 +53,18 @@ static double get_cif_dbu (const db::LoadLayoutOptions *options)
   return options->get_options<db::CIFReaderOptions> ().dbu;
 }
 
+// ywko
+static void set_catch_all_shapes (db::LoadLayoutOptions *options, bool b)
+{
+  options->get_options<db::CIFReaderOptions> ().catch_all_shapes = b;
+}
+
+static double get_catch_all_shapes (const db::LoadLayoutOptions *options)
+{
+  return options->get_options<db::CIFReaderOptions> ().catch_all_shapes;
+}
+// ywko
+
 static void set_layer_map (db::LoadLayoutOptions *options, const db::LayerMap &lm, bool f)
 {
   options->get_options<db::CIFReaderOptions> ().layer_map = lm;
@@ -187,7 +199,14 @@ gsi::ClassExt<db::LoadLayoutOptions> cif_reader_options (
     "@brief Specifies the database unit which the reader uses and produces\n"
     "See \\cif_dbu= method for a description of this property."
     "\nThis property has been added in version 0.21.\n"
-  ),
+  )+
+  // ywko
+  gsi::method_ext ("catch_all_shapes=", &set_catch_all_shapes,
+    "@brief ywko\n"
+  ) +
+  gsi::method_ext ("catch_all_shapes", &get_catch_all_shapes,
+    "@brief ywko\n"
+  ), // ywko
   ""
 );
 

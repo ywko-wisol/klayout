@@ -64,6 +64,9 @@ CIFReader::read (db::Layout &layout, const db::LoadLayoutOptions &options)
   const db::CIFReaderOptions &specific_options = options.get_options<db::CIFReaderOptions> ();
   m_wire_mode = specific_options.wire_mode;
   m_dbu = specific_options.dbu;
+  // ywko
+  m_catch_all_shapes = specific_options.catch_all_shapes;
+  // ywko
 
   set_layer_map (specific_options.layer_map);
   set_create_layers (specific_options.create_other_layers);
@@ -363,6 +366,18 @@ CIFReader::read_cell (db::Layout &layout, db::Cell &cell, double sf, int level)
   size_t layer_specs = 0;
   std::vector <db::Point> poly_pts;
 
+  // ywko - add catch all layer
+  if(m_catch_all_shapes) {
+    ++layer_specs;
+    std::pair<bool, unsigned int> ll = open_layer (layout, "MT0");
+    if (! ll.first) {
+      layer = -1; // ignore geometric objects on this layer
+    } else {
+      layer = int (ll.second);
+    }
+  }
+  // ywko
+
   while (true) {
 
     skip_blanks ();
@@ -404,6 +419,17 @@ CIFReader::read_cell (db::Layout &layout, db::Cell &cell, double sf, int level)
             error ("'DS' command: divider cannot be zero");
           }
         }
+
+        // ywko - Set default layer 
+        if(m_catch_all_shapes) {
+          std::pair<bool, unsigned int> ll = open_layer (layout, "MT0");
+          if (! ll.first) {
+            layer = -1; // ignore geometric objects on this layer
+          } else {
+            layer = int (ll.second);
+          }
+        }
+        // ywko
 
         expect_semi ();
 

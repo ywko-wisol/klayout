@@ -717,6 +717,9 @@ GenericReaderOptions::configure (db::LoadLayoutOptions &load_options)
   load_options.set_option_by_name ("cif_layer_map", tl::Variant::make_variant (m_layer_map));
   load_options.set_option_by_name ("cif_create_other_layers", m_create_other_layers);
   load_options.set_option_by_name ("cif_dbu", m_dbu);
+  // ywko
+  // load_options.set_option_by_name ("cif_catch_all_shapes", m_catch_all_shapes);
+  // ywko
   load_options.set_option_by_name ("cif_wire_mode", m_cif_wire_mode);
   load_options.set_option_by_name ("cif_keep_layer_names", m_keep_layer_names);
 

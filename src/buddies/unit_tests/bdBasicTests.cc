@@ -251,6 +251,9 @@ TEST(10)
 
   db::LoadLayoutOptions stream_opt;
   EXPECT_EQ (tl::to_string (stream_opt.get_option_by_name ("cif_dbu").to_double ()), "0.001");
+  // ywko
+  EXPECT_EQ (stream_opt.get_option_by_name ("cif_catch_all_shapes").to_bool (), false);
+  // ywko
   EXPECT_EQ (stream_opt.get_option_by_name ("cif_wire_mode").to_uint (), (unsigned int) 0);
   EXPECT_EQ (stream_opt.get_option_by_name ("cif_layer_map").to_user<db::LayerMap> ().to_string (), "layer_map()");
   EXPECT_EQ (stream_opt.get_option_by_name ("cif_create_other_layers").to_bool (), true);
@@ -277,6 +280,9 @@ TEST(10)
   opt.configure (stream_opt);
 
   EXPECT_EQ (tl::to_string (stream_opt.get_option_by_name ("cif_dbu").to_double ()), "0.125");
+  // ywko
+  EXPECT_EQ (stream_opt.get_option_by_name ("cif_catch_all_shapes").to_bool (), true);
+  // ywko
   EXPECT_EQ (stream_opt.get_option_by_name ("cif_wire_mode").to_uint (), (unsigned int) 1);
   EXPECT_EQ (stream_opt.get_option_by_name ("cif_layer_map").to_user<db::LayerMap> ().to_string (), "layer_map('1/0';'3-4/0-255';'A : 17/0')");
   EXPECT_EQ (stream_opt.get_option_by_name ("cif_create_other_layers").to_bool (), false);

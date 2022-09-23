@@ -139,6 +139,9 @@ private:
   std::string m_cellname;
   std::string m_cmd_buffer;
   std::map <unsigned int, db::cell_index_type> m_cells_by_id;
+  // ywko
+  bool m_catch_all_shapes;
+  // ywko
 
   void do_read (db::Layout &layout);
 
